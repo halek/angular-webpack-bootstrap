@@ -1,0 +1,9 @@
+body {
+    background: #fff;
+    color: #000;
+}
+
+@font-face {
+  font-family: 'OpenSans-Light';
+  src: url("../fonts/OpenSans-Light.ttf") format("truetype");
+}
