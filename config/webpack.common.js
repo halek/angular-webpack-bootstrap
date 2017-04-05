@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
 
@@ -30,7 +31,11 @@ module.exports = {
         loader: 'html-loader'
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        test: /\.(woff|woff2|ttf|eot)$/,
+        loader: 'file-loader?name=assets/[name].[hash].[ext]'
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
@@ -62,6 +67,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
+
+    new CopyWebpackPlugin([
+
+        // Copy directory contents to {output}/
+        { from: 'src/assets/images', to: 'assets/images' },
+        { from: 'manifest.json', to: 'manifest.json' },
+            
+      ], {
+        
+            // By default, we only copy modified files during
+            // a watch or webpack-dev-server build. Setting this
+            // to `true` copies all files.
+            copyUnmodified: true
+        })
 
   ]
 };
